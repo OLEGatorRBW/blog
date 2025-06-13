@@ -3,6 +3,8 @@ const fileInclude = require('gulp-file-include');
 const sass = require('gulp-sass')(require('sass'));
 const browserSync = require('browser-sync').create();
 const { deleteSync } = require('del');
+const fs = require('fs');
+
 
 // Пути
 const paths = {
@@ -45,10 +47,20 @@ function html() {
 
 // SCSS
 function styles() {
-  return src(paths.src.scss)
-    .pipe(sass().on('error', sass.logError))
-    .pipe(dest(paths.dist.css))
-    .pipe(browserSync.stream());
+  // Принудительно создаём папку
+  if (!fs.existsSync('dist/css')) {
+    fs.mkdirSync('dist/css', { recursive: true });
+  }
+
+  return src('src/scss/main.scss') // Явно указываем входной файл
+    .pipe(sass().on('error', (err) => {
+      console.error('SASS Error:', err.message);
+    }))
+    .pipe(dest('dist/css'))
+    .on('end', () => {
+      console.log('SCSS compiled successfully!');
+      console.log('Check dist/css/main.css');
+    });
 }
 
 // Изображения
