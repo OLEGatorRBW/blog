@@ -32,10 +32,15 @@ function clean() {
 
 // HTML
 function html() {
-  return src(paths.src.html)
-    .pipe(fileInclude({ prefix: '@@', basepath: '@file' }))
-    .pipe(dest(paths.dist.html))
-    .pipe(browserSync.stream());
+  return src('src/html/**/*.html')
+    .pipe(fileInclude({
+      prefix: '@@',
+      basepath: '@file',
+      context: {  // Передача переменных
+        env: process.env.NODE_ENV
+      }
+    }))
+    .pipe(dest('dist/'));
 }
 
 // SCSS
