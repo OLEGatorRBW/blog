@@ -1,9 +1,26 @@
+# Автоматически генерируемые папки
+/node_modules
+/dist
+/.vscode
+/.idea
 
-# Автоматически генерируемые файлы
-node_modules/
-dist/
-package-lock.json
+# Логи и временные файлы
+*.log
+*.tmp
+*.DS_Store
 
-# Исходники (их не должно быть в этой ветке)
-src/
-"@ | Out-File -FilePath .gitignore -Encoding utf8
+# Системные файлы
+Thumbs.db
+
+# Исходники изображений (если есть)
+src/img/content/raw/
+src/img/**/*.psd
+src/img/**/*.ai
+
+# Дополнительно для сборки
+.cache/
+.temp/
+
+# Windows-специфика
+[Dd]esktop.ini
+*.lnk
