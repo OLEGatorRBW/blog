@@ -2,11 +2,9 @@ const { src, dest, parallel, series, watch } = require('gulp');
 const fileInclude = require('gulp-file-include');
 const sass = require('gulp-sass')(require('sass'));
 const browserSync = require('browser-sync').create();
-const { deleteSync } = require('del');
-const fs = require('fs');
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
-
+const fs = require('fs');
 
 // Пути
 const paths = {
@@ -14,7 +12,7 @@ const paths = {
     html: 'src/html/**/*.html',
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js',
-    img: 'src/img/**/*.{jpg,jpeg,png,gif,svg}'
+    img: 'src/img/**/*.{jpg,jpeg,png,gif,svg,webp}'
   },
   dist: {
     base: 'dist/',
@@ -25,36 +23,33 @@ const paths = {
   }
 };
 
-// Очистка dist
+// Очистка dist (исправленная версия)
 function clean() {
-  const fs = require('fs');
   if (fs.existsSync(paths.dist.base)) {
-    fs.rmSync(paths.dist.base, { recursive: true });
+    fs.rmSync(paths.dist.base, { recursive: true, force: true });
   }
   return Promise.resolve();
 }
 
 // HTML
 function html() {
-  return src('src/html/**/*.html')
+  return src(paths.src.html)
+    .pipe(plumber())
     .pipe(fileInclude({
       prefix: '@@',
-      basepath: '@file',
-      context: {  // Передача переменных
-        env: process.env.NODE_ENV
-      }
+      basepath: '@file'
     }))
-    .pipe(dest('dist/'));
+    .pipe(dest(paths.dist.html))
+    .pipe(browserSync.stream());
 }
 
 // SCSS
 function styles() {
-  // Создаем папку при необходимости
-  if (!fs.existsSync('dist/css')) {
-    fs.mkdirSync('dist/css', { recursive: true });
+  if (!fs.existsSync(paths.dist.css)) {
+    fs.mkdirSync(paths.dist.css, { recursive: true });
   }
 
-  return src('src/scss/main.scss', { sourcemaps: true })
+  return src(paths.src.scss)
     .pipe(plumber({
       errorHandler: notify.onError({
         title: "SCSS Error",
@@ -63,13 +58,15 @@ function styles() {
       })
     }))
     .pipe(sass().on('error', sass.logError))
-    .pipe(dest('dist/css', { sourcemaps: '.' }))
-    .pipe(browserSync.stream({ match: '**/*.css' }))
-    .pipe(notify({
-      title: "SCSS Compiled",
-      message: "Styles processed successfully!",
-      onLast: true
-    }));
+    .pipe(dest(paths.dist.css))
+    .pipe(browserSync.stream({ match: '**/*.css' }));
+}
+
+// JavaScript
+function scripts() {
+  return src(paths.src.js)
+    .pipe(dest(paths.dist.js))
+    .pipe(browserSync.stream());
 }
 
 // Изображения
@@ -82,23 +79,30 @@ function images() {
 // Сервер
 function serve() {
   browserSync.init({
-    server: { baseDir: paths.dist.base },
+    server: {
+      baseDir: paths.dist.base,
+      serveStaticOptions: {
+        extensions: ['html']
+      }
+    },
     notify: false,
     open: true
   });
 
-  watch(paths.src.html, html);
+  watch(paths.src.html, html).on('change', browserSync.reload);
   watch(paths.src.scss, styles);
+  watch(paths.src.js, scripts);
   watch(paths.src.img, images);
 }
 
 // Сборка
-const build = series(clean, parallel(html, styles, images));
+const build = series(clean, parallel(html, styles, scripts, images));
 
-// Задачи
+// Экспорт задач
 exports.clean = clean;
 exports.html = html;
 exports.styles = styles;
+exports.scripts = scripts;
 exports.images = images;
 exports.build = build;
 exports.default = series(build, serve);
