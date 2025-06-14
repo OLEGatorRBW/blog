@@ -2,10 +2,9 @@ const { src, dest, parallel, series, watch } = require('gulp');
 const fileInclude = require('gulp-file-include');
 const sass = require('gulp-sass')(require('sass'));
 const browserSync = require('browser-sync').create();
-const { deleteSync } = require('del');
+const plumber = require('gulp-plumber');
+const notify = require('gulp-notify');
 const fs = require('fs');
-const plumber = require('gulp-plumber'); // NEW
-const notify = require('gulp-notify'); // NEW
 
 // Пути
 const paths = {
@@ -13,7 +12,7 @@ const paths = {
     html: 'src/html/**/*.html',
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js',
-    img: 'src/img/**/*.{jpg,jpeg,png,gif,svg}'
+    img: 'src/img/**/*.{jpg,jpeg,png,gif,svg,webp}'
   },
   dist: {
     base: 'dist/',
@@ -24,24 +23,24 @@ const paths = {
   }
 };
 
-// Очистка dist
+// Очистка dist (исправленная версия)
 function clean() {
-  return deleteSync([paths.dist.base]); // NEW: более надежный способ
+  if (fs.existsSync(paths.dist.base)) {
+    fs.rmSync(paths.dist.base, { recursive: true, force: true });
+  }
+  return Promise.resolve();
 }
 
 // HTML
 function html() {
   return src(paths.src.html)
-    .pipe(plumber()) // NEW: обработка ошибок
+    .pipe(plumber())
     .pipe(fileInclude({
       prefix: '@@',
-      basepath: '@file',
-      context: {
-        env: process.env.NODE_ENV
-      }
+      basepath: '@file'
     }))
     .pipe(dest(paths.dist.html))
-    .pipe(browserSync.stream()); // NEW: автообновление HTML
+    .pipe(browserSync.stream());
 }
 
 // SCSS
@@ -50,8 +49,8 @@ function styles() {
     fs.mkdirSync(paths.dist.css, { recursive: true });
   }
 
-  return src(paths.src.scss, { sourcemaps: true }) // NEW: добавлены sourcemaps
-    .pipe(plumber({ // NEW: улучшенная обработка ошибок
+  return src(paths.src.scss)
+    .pipe(plumber({
       errorHandler: notify.onError({
         title: "SCSS Error",
         message: "<%= error.message %>",
@@ -59,8 +58,15 @@ function styles() {
       })
     }))
     .pipe(sass().on('error', sass.logError))
-    .pipe(dest(paths.dist.css, { sourcemaps: '.' })) // NEW: sourcemaps
-    .pipe(browserSync.stream({ match: '**/*.css' })); // NEW: автообновление CSS
+    .pipe(dest(paths.dist.css))
+    .pipe(browserSync.stream({ match: '**/*.css' }));
+}
+
+// JavaScript
+function scripts() {
+  return src(paths.src.js)
+    .pipe(dest(paths.dist.js))
+    .pipe(browserSync.stream());
 }
 
 // Изображения
@@ -73,28 +79,30 @@ function images() {
 // Сервер
 function serve() {
   browserSync.init({
-    server: { baseDir: paths.dist.base },
+    server: {
+      baseDir: paths.dist.base,
+      serveStaticOptions: {
+        extensions: ['html']
+      }
+    },
     notify: false,
-    open: true,
-    reloadOnRestart: true // NEW: перезагрузка при рестарте
+    open: true
   });
-}
 
-// Отслеживание файлов
-function watchFiles() { // NEW: вынесено в отдельную функцию
   watch(paths.src.html, html).on('change', browserSync.reload);
   watch(paths.src.scss, styles);
+  watch(paths.src.js, scripts);
   watch(paths.src.img, images);
 }
 
 // Сборка
-const build = series(clean, parallel(html, styles, images));
+const build = series(clean, parallel(html, styles, scripts, images));
 
-// Задачи
+// Экспорт задач
 exports.clean = clean;
 exports.html = html;
 exports.styles = styles;
+exports.scripts = scripts;
 exports.images = images;
 exports.build = build;
-exports.watch = watchFiles; // NEW
-exports.default = series(build, parallel(serve, watchFiles)); // NEW: улучшенный запуск
+exports.default = series(build, serve);
