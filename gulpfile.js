@@ -4,7 +4,8 @@ const sass = require('gulp-sass')(require('sass'));
 const browserSync = require('browser-sync').create();
 const { deleteSync } = require('del');
 const fs = require('fs');
-
+const plumber = require('gulp-plumber'); // NEW
+const notify = require('gulp-notify'); // NEW
 
 // Пути
 const paths = {
@@ -25,42 +26,41 @@ const paths = {
 
 // Очистка dist
 function clean() {
-  const fs = require('fs');
-  if (fs.existsSync(paths.dist.base)) {
-    fs.rmSync(paths.dist.base, { recursive: true });
-  }
-  return Promise.resolve();
+  return deleteSync([paths.dist.base]); // NEW: более надежный способ
 }
 
 // HTML
 function html() {
-  return src('src/html/**/*.html')
+  return src(paths.src.html)
+    .pipe(plumber()) // NEW: обработка ошибок
     .pipe(fileInclude({
       prefix: '@@',
       basepath: '@file',
-      context: {  // Передача переменных
+      context: {
         env: process.env.NODE_ENV
       }
     }))
-    .pipe(dest('dist/'));
+    .pipe(dest(paths.dist.html))
+    .pipe(browserSync.stream()); // NEW: автообновление HTML
 }
 
 // SCSS
 function styles() {
-  // Принудительно создаём папку
-  if (!fs.existsSync('dist/css')) {
-    fs.mkdirSync('dist/css', { recursive: true });
+  if (!fs.existsSync(paths.dist.css)) {
+    fs.mkdirSync(paths.dist.css, { recursive: true });
   }
 
-  return src('src/scss/main.scss') // Явно указываем входной файл
-    .pipe(sass().on('error', (err) => {
-      console.error('SASS Error:', err.message);
+  return src(paths.src.scss, { sourcemaps: true }) // NEW: добавлены sourcemaps
+    .pipe(plumber({ // NEW: улучшенная обработка ошибок
+      errorHandler: notify.onError({
+        title: "SCSS Error",
+        message: "<%= error.message %>",
+        sound: false
+      })
     }))
-    .pipe(dest('dist/css'))
-    .on('end', () => {
-      console.log('SCSS compiled successfully!');
-      console.log('Check dist/css/main.css');
-    });
+    .pipe(sass().on('error', sass.logError))
+    .pipe(dest(paths.dist.css, { sourcemaps: '.' })) // NEW: sourcemaps
+    .pipe(browserSync.stream({ match: '**/*.css' })); // NEW: автообновление CSS
 }
 
 // Изображения
@@ -75,10 +75,14 @@ function serve() {
   browserSync.init({
     server: { baseDir: paths.dist.base },
     notify: false,
-    open: true
+    open: true,
+    reloadOnRestart: true // NEW: перезагрузка при рестарте
   });
+}
 
-  watch(paths.src.html, html);
+// Отслеживание файлов
+function watchFiles() { // NEW: вынесено в отдельную функцию
+  watch(paths.src.html, html).on('change', browserSync.reload);
   watch(paths.src.scss, styles);
   watch(paths.src.img, images);
 }
@@ -92,4 +96,5 @@ exports.html = html;
 exports.styles = styles;
 exports.images = images;
 exports.build = build;
-exports.default = series(build, serve);
+exports.watch = watchFiles; // NEW
+exports.default = series(build, parallel(serve, watchFiles)); // NEW: улучшенный запуск
