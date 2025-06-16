@@ -1,23 +1,22 @@
 {
   "name": "olegatorrbw",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "gulp",
+    "build": "gulp build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
     "browser-sync": "^2.27.11",
-    "del": "^7.1.0",
+    "del": "^6.1.1",
     "gulp": "^4.0.2",
     "gulp-file-include": "^2.3.0",
-    "gulp-notify": "^5.0.0",
-    "gulp-plumber": "^1.2.1",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-newer": "^1.4.0",
     "gulp-sass": "^5.1.0",
+    "gulp-size": "^4.0.1",
     "gulp-sourcemaps": "^3.0.0",
+    "gulp-terser": "^2.1.0",
+    "gulp-webp": "^4.0.1",
     "sass": "^1.75.0"
   }
 }

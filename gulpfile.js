@@ -4,9 +4,13 @@ const sass = require('gulp-sass')(require('sass'));
 const browserSync = require('browser-sync').create();
 const imagemin = require('gulp-imagemin');
 const newer = require('gulp-newer');
-const webp = require('gulp-webp'); // Оставляем оригинальное имя
+const webp = require('gulp-webp');
 const size = require('gulp-size');
 const del = require('del');
+const terser = require('gulp-terser'); 
+const sourcemaps = require('gulp-sourcemaps'); 
+
+// Пути и остальной код остаются без изменений...
 
 // Пути
 const paths = {
@@ -81,8 +85,19 @@ function styles() {
 }
 
 // JS
+// Обновляем задачу scripts()
 function scripts() {
   return src(paths.src.js)
+    .pipe(sourcemaps.init()) // Инициализация
+    .pipe(terser({
+      keep_fnames: true,
+      mangle: { reserved: ['$', 'jQuery'] }
+    }))
+    .on('error', function(err) {
+      console.error('Error in scripts task:', err.toString());
+      this.emit('end');
+    })
+    .pipe(sourcemaps.write('.')) // Запись .map файлов
     .pipe(dest(paths.dist.js))
     .pipe(browserSync.stream());
 }
