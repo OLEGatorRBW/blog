@@ -5,13 +5,14 @@ const browserSync = require('browser-sync').create();
 const imagemin = require('gulp-imagemin');
 const newer = require('gulp-newer');
 const webp = require('gulp-webp');
-const size = require('gulp-size');
+const gulpSize = require('gulp-size');
 const del = require('del');
 const concat = require('gulp-concat');
-const eslint = require('gulp-eslint');
 const babel = require('gulp-babel');
 const terser = require('gulp-terser');
 const sourcemaps = require('gulp-sourcemaps');
+const postcss = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
 
 // Пути
 const paths = {
@@ -19,9 +20,9 @@ const paths = {
     html: 'src/html/**/*.html',
     scss: 'src/scss/**/*.scss',
     js: [
-      'src/js/libs/*.js',    // Сначала библиотеки
-      'src/js/modules/*.js', // Затем модули
-      'src/js/main.js'       // Главный файл последним
+      'src/js/libs/*.js',
+      'src/js/modules/*.js',
+      'src/js/main.js'
     ],
     img: 'src/img/**/*.{jpg,jpeg,png,gif,svg}'
   },
@@ -53,7 +54,7 @@ function images() {
         ]
       })
     ]))
-    .pipe(size({ showFiles: true }))
+    .pipe(gulpSize({ showFiles: true }))
     .pipe(dest(paths.dist.img))
     .pipe(browserSync.stream());
 }
@@ -83,8 +84,15 @@ function html() {
 
 // SCSS -> CSS
 function styles() {
+  const plugins = [
+    autoprefixer()
+  ];
+
   return src(paths.src.scss)
+    .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
+    .pipe(postcss(plugins))
+    .pipe(sourcemaps.write('.'))
     .pipe(dest(paths.dist.css))
     .pipe(browserSync.stream());
 }
@@ -93,9 +101,6 @@ function styles() {
 function scripts() {
   return src(paths.src.js)
     .pipe(sourcemaps.init())
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError())
     .pipe(babel({
       presets: ['@babel/preset-env']
     }))
@@ -103,9 +108,6 @@ function scripts() {
     .pipe(terser({
       mangle: {
         reserved: ['$', 'jQuery']
-      },
-      output: {
-        comments: false
       }
     }))
     .pipe(sourcemaps.write('.'))
@@ -142,5 +144,6 @@ const build = series(
 exports.images = images;
 exports.webp = convertToWebp;
 exports.scripts = scripts;
+exports.styles = styles;
 exports.build = build;
 exports.default = series(build, serve);
