@@ -1,6 +1,13 @@
-﻿node_modules/
+﻿# Игнорируемые директории
+node_modules/
 dist/
+coverage/
+
+# Игнорируемые файлы
 *.min.js
+*.log
+*.tmp
+
+# Игнорируем настройки IDE
 .idea/
 .vscode/
-*.log
