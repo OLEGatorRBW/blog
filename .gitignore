@@ -24,3 +24,7 @@ src/img/**/*.ai
 # Windows-специфика
 [Dd]esktop.ini
 *.lnk
+
+# Добавляем src/img/ в .gitignore (если это сгенерированные файлы)
+if (-not (Test-Path .gitignore)) { New-Item .gitignore }
+"src/img/" | Out-File -Append -FilePath .gitignore
