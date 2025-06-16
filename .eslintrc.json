@@ -1,0 +1,12 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "rules": {
+    "semi": ["warn", "always"],  // Изменили error на warn
+    "no-unused-vars": "warn",    // Предупреждение вместо ошибки
+    "quotes": "off"              // Отключили проверку кавычек
+  }
+}

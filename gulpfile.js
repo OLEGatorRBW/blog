@@ -7,17 +7,22 @@ const newer = require('gulp-newer');
 const webp = require('gulp-webp');
 const size = require('gulp-size');
 const del = require('del');
-const terser = require('gulp-terser'); 
-const sourcemaps = require('gulp-sourcemaps'); 
-
-// Пути и остальной код остаются без изменений...
+const concat = require('gulp-concat');
+const eslint = require('gulp-eslint');
+const babel = require('gulp-babel');
+const terser = require('gulp-terser');
+const sourcemaps = require('gulp-sourcemaps');
 
 // Пути
 const paths = {
   src: {
     html: 'src/html/**/*.html',
     scss: 'src/scss/**/*.scss',
-    js: 'src/js/**/*.js',
+    js: [
+      'src/js/libs/*.js',    // Сначала библиотеки
+      'src/js/modules/*.js', // Затем модули
+      'src/js/main.js'       // Главный файл последним
+    ],
     img: 'src/img/**/*.{jpg,jpeg,png,gif,svg}'
   },
   dist: {
@@ -53,7 +58,7 @@ function images() {
     .pipe(browserSync.stream());
 }
 
-// Конвертация в WebP (исправленная версия)
+// Конвертация в WebP
 function convertToWebp() {
   return src(paths.src.img)
     .pipe(newer({
@@ -62,7 +67,7 @@ function convertToWebp() {
     }))
     .pipe(webp({ 
       quality: 80,
-      method: 6 // Добавляем явное указание метода сжатия
+      method: 6
     }))
     .pipe(dest(paths.dist.img))
     .pipe(browserSync.stream());
@@ -84,20 +89,26 @@ function styles() {
     .pipe(browserSync.stream());
 }
 
-// JS
-// Обновляем задачу scripts()
+// JS обработка
 function scripts() {
   return src(paths.src.js)
-    .pipe(sourcemaps.init()) // Инициализация
-    .pipe(terser({
-      keep_fnames: true,
-      mangle: { reserved: ['$', 'jQuery'] }
+    .pipe(sourcemaps.init())
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
+    .pipe(babel({
+      presets: ['@babel/preset-env']
     }))
-    .on('error', function(err) {
-      console.error('Error in scripts task:', err.toString());
-      this.emit('end');
-    })
-    .pipe(sourcemaps.write('.')) // Запись .map файлов
+    .pipe(concat('bundle.min.js'))
+    .pipe(terser({
+      mangle: {
+        reserved: ['$', 'jQuery']
+      },
+      output: {
+        comments: false
+      }
+    }))
+    .pipe(sourcemaps.write('.'))
     .pipe(dest(paths.dist.js))
     .pipe(browserSync.stream());
 }
@@ -130,5 +141,6 @@ const build = series(
 // Экспорт
 exports.images = images;
 exports.webp = convertToWebp;
+exports.scripts = scripts;
 exports.build = build;
 exports.default = series(build, serve);
