@@ -2,8 +2,9 @@
 # Автоматически генерируемые файлы
 node_modules/
 dist/
+src/
 package-lock.json
 
 # Исходники (их не должно быть в этой ветке)
-src/
+
 "@ | Out-File -FilePath .gitignore -Encoding utf8
