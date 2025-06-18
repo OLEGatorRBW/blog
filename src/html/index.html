@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <title>Test</title>
-  <link rel="stylesheet" href="/css/style.css">
+  @@include('./components/layout//head.html', {
+  "title": "OLEGatorRBW | Главная страница"
+})
 </head>
 <body>
-  <h1>Gulp работает!</h1>
+@@include('./components/layout/header/header.html')
+  <main class="about-page">
+    <h1>О проекте</h1>
+    <button class="button">Подписаться</button>
+  </main>
+  <script src="js/bundle.min.js"></script>
 </body>
 </html>
