@@ -6,10 +6,44 @@
 })
 </head>
 <body>
-
-@@include('./components/layout/header/header.html')
-@@include('./components/layout/footer/footer.html')
-
-  
+  @@include('./components/layout/header/header.html')
+  <main class="main" itemscope itemtype="https://schema.org/WebPage">
+    <div class="main__container container">
+      <div class="main__title" aria-label="Главная страница">Главная</div>
+      <div class="grid" role="navigation" aria-label="Основные разделы сайта">
+        <article class="grid__item grid__item--about" itemscope itemtype="https://schema.org/CreativeWork">
+          <a href="/about" class="grid__link" aria-label="О себе" itemprop="url">
+            <h2 class="grid__title">О себе</h2>
+          </a>
+        </article>
+        <article class="grid__item grid__item--hockey" itemscope itemtype="https://schema.org/CreativeWork">
+          <a href="/heckey" class="grid__link" aria-label="Хоккей" itemprop="url">
+            <h2 class="grid__title">Хоккей</h2>
+          </a>
+        </article>
+        <article class="grid__item grid__item--hd" itemscope itemtype="https://schema.org/CreativeWork">
+          <a href="/hd" class="grid__link" aria-label="Harley Davidson" itemprop="url">
+            <h2 class="grid__title">Harley</h2>
+          </a>
+        </article>
+        <article class="grid__item grid__item--travel" itemscope itemtype="https://schema.org/CreativeWork">
+          <a href="/travel" class="grid__link" aria-label="Путешествия" itemprop="url">
+            <h2 class="grid__title">Путешествия</h2>
+          </a>
+        </article>
+        <article class="grid__item grid__item--music" itemscope itemtype="https://schema.org/CreativeWork">
+          <a href="/music" class="grid__link" aria-label="Музыка" itemprop="url">
+            <h2 class="grid__title">Музыка</h2>
+          </a>
+        </article>
+        <article class="grid__item grid__item--js" itemscope itemtype="https://schema.org/CreativeWork">
+          <a href="/js" class="grid__link" aria-label="Учебник JAVASCRIPT" itemprop="url">
+            <h2 class="grid__title">Учебник JAVASCRIPT</h2>
+          </a>
+        </article>
+      </div>
+    </div>
+  </main>
+  @@include('./components/layout/footer/footer.html')  
 </body>
 </html>
