@@ -1,2 +1,18 @@
+// Core (подключаются первыми!)
+// В вашем main.scss
+@use 'normalize.css/normalize' as *;
+@use 'base/typography';
+
+// Utils
+
+// Базовые стили
 @use 'base/variables';
+
+// 
+@use 'layout/container';
 @use 'layout/header';
+
+
+//Компоненты
+
+

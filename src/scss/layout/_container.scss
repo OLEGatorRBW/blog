@@ -1,0 +1,10 @@
+@use '../base/variables' as *;
+
+.container{
+  width: 100%;
+  max-width: $container-width; // Обычно 1200-1440px
+  margin: 0 auto;
+  padding: 0;
+
+  border: 1px solid blue;
+}
