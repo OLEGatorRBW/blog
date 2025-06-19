@@ -90,7 +90,9 @@ function styles() {
 
   return src(paths.src.scss)
     .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass({
+      includePaths: ['node_modules'] // Добавлено для normalize.css
+    }).on('error', sass.logError))
     .pipe(postcss(plugins))
     .pipe(sourcemaps.write('.'))
     .pipe(dest(paths.dist.css))
