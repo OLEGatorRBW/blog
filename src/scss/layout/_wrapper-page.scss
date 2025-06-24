@@ -1,0 +1,9 @@
+.wrapper-page{
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Шапка-контент-подвал */
+    height: 100dvh; /* Новый стандарт (лучше для мобильных) */
+    overflow: hidden;
+  
+
+    border: 1px solid red;
+}
