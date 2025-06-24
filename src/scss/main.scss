@@ -6,11 +6,12 @@
 
 // Базовые стили
 @use 'base/variables';
+@use 'base/wrapper-page';
 
-// 
-@use 'layout/wrapper-page';
 @use 'layout/container';
-@use 'layout/header';
+@use 'layout/main-content';
+
+@use 'components/header';
 
 
 //Компоненты
