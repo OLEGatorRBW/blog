@@ -3,6 +3,7 @@
 @use 'normalize.css/normalize' as *;
 
 // Utils
+@use 'base/utilities';
 
 // Базовые стили
 @use 'base/variables';
