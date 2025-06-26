@@ -1,0 +1,18 @@
+// base/_fonts.scss
+@use 'variables' as *;
+
+:root {
+  font-display: swap;
+}
+
+body {
+  font-family: 'Fira Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+}
+
+// Дополнительные настройки типографики
+h1, h2, h3 {
+  font-family: 'Fira Sans Condensed', system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+}

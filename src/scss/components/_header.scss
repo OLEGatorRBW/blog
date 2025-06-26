@@ -2,7 +2,6 @@
   width: 100%;
   background: #fff; // Теперь переменная будет работать
   padding: 0;
-  color: rgb(255, 255, 255);
 
   border: 1px solid #000;
 }
@@ -11,4 +10,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.header-quote{
+  
+  font-family: 'Clicker Script', cursive;
+  font-size: 1rem;
+  line-height: 1;
+  color: #2c3e50;
+
 }

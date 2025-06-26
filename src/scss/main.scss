@@ -8,12 +8,14 @@
 // Базовые стили
 @use 'base/variables';
 @use 'base/wrapper-page';
+@use 'base/fonts';
 
 @use 'layout/container';
 @use 'layout/main-content';
 
 @use 'components/header';
 @use 'components/footer';
+
 
 
 //Компоненты
