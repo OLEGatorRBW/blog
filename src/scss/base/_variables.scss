@@ -7,4 +7,13 @@ $font-primary: 'Fira Sans', sans-serif;
 $font-heading: 'Fira Sans Condensed', sans-serif;
 $font-logo: 'Alumni Sans Collegiate One', sans-serif;
 
-$gap-side: 100px
+$gap-side: 100px;
+
+// В _variables.scss или в начале CSS-файла
+$space-unit: 1rem; // Базовый модуль
+$space-xxs: $space-unit * 0.25; // 4px
+$space-xs: $space-unit * 0.5;   // 8px
+$space-sm: $space-unit * 0.75;  // 12px
+$space-md: $space-unit;         // 16px
+$space-lg: $space-unit * 1.5;   // 24px
+$space-xl: $space-unit * 2;     // 32px
