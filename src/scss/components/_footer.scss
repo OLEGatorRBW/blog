@@ -13,6 +13,14 @@
   border: 1px solid #000;
 }
 
+.footer__ps, 
+.footer__copyright {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 0.875rem; /* 14px */
+    font-weight: 300;
+    line-height: 1.5;
+}
+
 .footer__ps{
     margin: 0;
     padding: 0;

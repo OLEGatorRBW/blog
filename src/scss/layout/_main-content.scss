@@ -8,6 +8,12 @@
     height: 100%;
 }
 
+.main__title {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 1rem; /* 32px */
+    font-weight: 300;
+}
+
 .grid{    
     display: flex;
     justify-content: space-between;
@@ -96,10 +102,10 @@
 }
 
 .grid__title{
-    font-size: clamp(1.5rem, 4vw, 2.2rem); /* Адаптивный размер */
-    font-weight: 800;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+       font-family: 'Alumni Sans', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem); /* 24-40px */
+    font-weight: 600;
+    letter-spacing: 0.03em;
     color: #fff;
     text-align: center;
     text-transform: uppercase;
