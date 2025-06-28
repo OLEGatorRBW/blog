@@ -25,24 +25,22 @@
   padding: 0.3rem 0; 
 }
 
-  _.header__quote-wrapper {
-    padding: 0 $space-sm; // 12px по бокам
-  }
+.header__quote-wrapper {
+  padding: 0 $space-sm; // 12px по бокам
+}
 
 .header__quote-text {
   font-family: 'Caveat', cursive;
   font-size: 1.4rem;
   font-weight: 600;
   line-height: 1.1;
-
 }
 
 .header__quote-author {
   font-family: 'Caveat', cursive;
   font-size: 1.2rem;
   font-weight: 500;
-    margin-bottom: $space-xxs;
-
+  margin-bottom: $space-xxs;
 }
 
 .header__email {
