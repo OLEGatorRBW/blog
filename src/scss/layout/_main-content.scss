@@ -1,5 +1,6 @@
 .main{
    min-height: calc(100dvh - var(--header-height) - var(--footer-height));
+   padding: 1.5rem 0;
 }
 
 .main__container{
@@ -9,9 +10,12 @@
 }
 
 .main__title {
-    font-family: 'Fira Sans', sans-serif;
-    font-size: 1rem; /* 32px */
-    font-weight: 300;
+  font-size: 0.75rem;    // 12px - subtle breadcrumb text
+  font-weight: 400;      // Regular weight (not light)
+  color: #666;           // Secondary text color
+  margin: 0;
+  letter-spacing: 0.02em;
+
 }
 
 .grid{    
@@ -22,15 +26,18 @@
     flex: 1;    
     gap: 1rem;
     min-height: 0; 
+    padding: 0.5rem 0;
 }
 
 .grid__item{
     position: relative;
-    flex: 0 1 calc(33.333% - 1rem);
+    flex: 1 1 calc(33.333% - 1rem);
     height: calc(50% - 0.5rem);
     min-width: 250px;
     box-sizing: border-box;
     border-radius: 5px;
+    margin-bottom: 0;
+    overflow: hidden;
 
     &--about {
         background-image: url(../../img/bg/meMain.jpg);
@@ -98,16 +105,19 @@
     align-items: center;   
     justify-content: center; 
 
+    padding: 1rem; 
+
     text-decoration: none;
 }
 
 .grid__title{
        font-family: 'Alumni Sans', sans-serif;
-    font-size: clamp(1.5rem, 4vw, 2.5rem); /* 24-40px */
+    font-size: clamp(1.5rem, 4vw, 2.5rem); 
     font-weight: 600;
     letter-spacing: 0.03em;
     color: #fff;
     text-align: center;
     text-transform: uppercase;
-    margin: 0 0 1rem;
+    margin: 0;
+     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
