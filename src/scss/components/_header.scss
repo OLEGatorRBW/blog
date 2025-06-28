@@ -1,5 +1,7 @@
+@use 'base/variables' as *;
+
 .header {
-  padding: 6px 0;
+   padding: $space-sm 0;
 }
 
 .header__container {
@@ -7,7 +9,7 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: $space-md;
 }
 
 .header__logo {
@@ -18,23 +20,29 @@
 }
 
 .header__quote {
-  margin: 0 auto;
+  margin-bottom: $space-xs;
   text-align: center;
   padding: 0.3rem 0; 
 }
+
+  _.header__quote-wrapper {
+    padding: 0 $space-sm; // 12px по бокам
+  }
 
 .header__quote-text {
   font-family: 'Caveat', cursive;
   font-size: 1.4rem;
   font-weight: 600;
   line-height: 1.1;
+
 }
 
 .header__quote-author {
   font-family: 'Caveat', cursive;
   font-size: 1.2rem;
   font-weight: 500;
-  margin-top: 0;
+    margin-bottom: $space-xxs;
+
 }
 
 .header__email {
