@@ -1,12 +1,9 @@
-// Core (подключаются первыми!)
-// В вашем main.scss
+
 @use 'normalize.css/normalize' as *;
 
-// Utils
-@use 'base/utilities';
-
-// Базовые стили
 @use 'base/variables';
+@use 'base/mixins';
+@use 'base/utilities';
 @use 'base/wrapper-page';
 @use 'base/fonts';
 
@@ -15,9 +12,5 @@
 
 @use 'components/header';
 @use 'components/footer';
-
-
-
-//Компоненты
 
 

@@ -1,3 +1,5 @@
+@use '../base/mixins' as vars;
+
 .main{
    min-height: calc(100dvh - var(--header-height) - var(--footer-height));
 }
@@ -9,9 +11,9 @@
 }
 
 .main__title {
-  font-size: 0.75rem;    // 12px - subtle breadcrumb text
-  font-weight: 400;      // Regular weight (not light)
-  color: #666;           // Secondary text color
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #666;
   margin: 0;
   letter-spacing: 0.02em;
 }
@@ -45,66 +47,47 @@
         right: 0;
         bottom: 0;
         background-color: rgba(44, 106, 61, 0.4);
-        pointer-events: none; 
         transition: opacity 0.3s ease;
+        z-index: 1;
     }
 
     &:hover::before {
         opacity: 0;
     }
 
-    &--about {
+    &--about {        
         background-image: url(../../img/bg/meMain.jpg);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: #f0f0f0; /* Фолбэк, если изображение не загрузится */
-        background-attachment: local; 
+        @include vars.background-cover;
     }
 
     &--hockey {
         background-image: url(../../img/bg/hockeyMain.jpg);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: #f0f0f0; /* Фолбэк, если изображение не загрузится */
-        background-attachment: local; 
+            @include vars.background-cover;
+
     }
 
     &--hd {
         background-image: url(../../img/bg/hdMain.jpg);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: #f0f0f0; /* Фолбэк, если изображение не загрузится */
-        background-attachment: local; 
+        @include vars.background-cover;
+
     }
 
     &--travel {
         background-image: url(../../img/bg/travelMain.jpg);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: #f0f0f0; /* Фолбэк, если изображение не загрузится */
-        background-attachment: local; 
+        @include vars.background-cover;
+
     }
 
     &--music {
         background-image: url(../../img/bg/musicMain.jpg);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: #f0f0f0; /* Фолбэк, если изображение не загрузится */
-        background-attachment: local; 
+        @include vars.background-cover;
+
     }
 
     &--js {
         background-image: url(../../img/bg/jsMain.jpeg);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: #f0f0f0; /* Фолбэк, если изображение не загрузится */
-        background-attachment: local; 
+        @include vars.background-cover;
+
     }
 }
 
@@ -114,6 +97,8 @@
     left: 0;
     right: 0;
     bottom: 0;
+
+    z-index: 2;
 
     display: flex;         
     align-items: center;   
@@ -125,7 +110,7 @@
 }
 
 .grid__title{
-       font-family: 'Alumni Sans', sans-serif;
+    font-family: 'Alumni Sans', sans-serif;
     font-size: clamp(1.5rem, 4vw, 2.5rem); 
     font-weight: 600;
     letter-spacing: 0.03em;
@@ -133,5 +118,5 @@
     text-align: center;
     text-transform: uppercase;
     margin: 0;
-     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
