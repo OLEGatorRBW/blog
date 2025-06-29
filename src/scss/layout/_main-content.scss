@@ -1,6 +1,5 @@
 .main{
    min-height: calc(100dvh - var(--header-height) - var(--footer-height));
-   padding: 1.5rem 0;
 }
 
 .main__container{
@@ -15,7 +14,6 @@
   color: #666;           // Secondary text color
   margin: 0;
   letter-spacing: 0.02em;
-
 }
 
 .grid{    
@@ -38,6 +36,22 @@
     border-radius: 5px;
     margin-bottom: 0;
     overflow: hidden;
+
+     &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(44, 106, 61, 0.4);
+        pointer-events: none; 
+        transition: opacity 0.3s ease;
+    }
+
+    &:hover::before {
+        opacity: 0;
+    }
 
     &--about {
         background-image: url(../../img/bg/meMain.jpg);
