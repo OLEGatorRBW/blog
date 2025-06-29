@@ -1,7 +1,7 @@
 .footer {
   width: 100%;
   background: #fff; // Теперь переменная будет работать
-  padding: 0;
+  padding: 1rem   0;
   color: #000;
 }
 
@@ -10,14 +10,18 @@
   flex-direction: column;
   justify-content:center;
   align-items: end;
+  gap: 0.5rem; // 8px between elements
+  padding: 0 1rem;
 }
 
 .footer__ps, 
 .footer__copyright {
     font-family: 'Fira Sans', sans-serif;
-    font-size: 0.875rem; /* 14px */
+    font-size: 0.75rem; /* 14px */
     font-weight: 300;
-    line-height: 1.5;
+    line-height: 1.4;
+    margin: 0;
+  padding: 0.125rem 0;
 }
 
 .footer__ps{
@@ -26,6 +30,5 @@
 }
 
 .footer__copyright{
-        margin: 0;
-    padding: 0;
+   opacity: 0.8;
 }
