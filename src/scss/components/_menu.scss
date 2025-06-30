@@ -1,3 +1,4 @@
+@use '../base/variables' as *;
 .menu{
   display: flex;
   justify-content: space-between;
@@ -10,12 +11,14 @@
 .menu__item{
   font-family: 'Alumni Sans', sans-serif;
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.1;
 
   text-transform: uppercase;
 
   padding: 0;
+}
 
-  border-bottom: 1px solid #000;
+.menu__link{
+  color: $dark-color;
 }
