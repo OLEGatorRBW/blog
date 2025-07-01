@@ -17,3 +17,14 @@ $space-sm: $space-unit * 0.75;  // 12px
 $space-md: $space-unit;         // 16px
 $space-lg: $space-unit * 1.5;   // 24px
 $space-xl: $space-unit * 2;     // 32px
+
+$container-width: 1280px;
+$space-xxs: 4px;
+$space-sm: 8px;
+$space-md: 16px;
+
+$font-primary: 'Fira Sans', sans-serif;
+$font-accent: 'Fira Sans', cursive;
+
+$text-secondary: #555;
+$border-color: #eee;
