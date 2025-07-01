@@ -1,4 +1,7 @@
 @use '../base/variables' as *;
+@use '../base/mixins' as vars;
+@use 'sass:map';
+
 .menu {
   display: flex;
   justify-content: flex-end;
@@ -13,10 +16,12 @@
 }
 
 .menu__item{
-  font-family: 'Alumni Sans', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  line-height: 1.1;
+  @include vars.font(
+      $family: $font-olegatorrbw,
+      $size: 1rem,
+      $weight: map.get($font-weights, bold),
+      $letter-spacing: 0.05em
+    );
 
   text-transform: uppercase;
 

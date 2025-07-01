@@ -1,7 +1,23 @@
+@use 'sass:map';
+
 @mixin background-cover {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-color: #f0f0f0;
   background-attachment: local;
+}
+
+@mixin font(
+  $family: $font-text,
+  $size: $text-base,
+  $weight: 700,
+  $line-height: 1.2rem,
+  $letter-spacing: 0.03em
+) {
+  font-family: $family;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
 }

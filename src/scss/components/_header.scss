@@ -1,3 +1,7 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as vars;
+@use 'sass:map';
+
 .header__container {
   position: relative;
   display: flex;
@@ -23,3 +27,23 @@
 
   text-align: center;
 }
+  
+
+.header__quote-text{
+  @include vars.font(
+        $family: $font-text,
+        $size: 1rem,
+        $weight: map.get($font-weights, regular),
+        $letter-spacing: 0
+      );  
+}
+
+.header__quote-author{
+  @include vars.font(
+        $family: $font-text,
+        $size: 0.85rem,
+        $weight: map.get($font-weights, regular),
+        $letter-spacing: 0
+      );  
+}
+

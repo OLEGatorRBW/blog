@@ -1,4 +1,6 @@
+@use '../base/variables' as *;
 @use '../base/mixins' as vars;
+@use 'sass:map';
 
 .main{
    min-height: calc(100dvh - var(--header-height) - var(--footer-height));
@@ -109,10 +111,12 @@
 }
 
 .grid__title{
-    font-family: 'Alumni Sans', sans-serif;
-    font-size: clamp(1.5rem, 4vw, 2.5rem); 
-    font-weight: 600;
-    letter-spacing: 0.03em;
+  @include vars.font(
+        $family: $font-olegatorrbw,
+        $size: 2rem,
+        $weight: map.get($font-weights, bold),
+        $letter-spacing: 0.05em
+      ); 
     color: #fff;
     text-align: center;
     text-transform: uppercase;

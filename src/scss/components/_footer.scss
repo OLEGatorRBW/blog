@@ -1,3 +1,6 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as vars;
+
 .footer {
   width: 100%;
   background: #fff; // Теперь переменная будет работать
@@ -16,7 +19,7 @@
 
 .footer__ps, 
 .footer__copyright {
-    font-family: 'Fira Sans', sans-serif;
+    font-family: $font-text;
     font-size: 0.75rem; /* 14px */
     font-weight: 300;
     line-height: 1.4;

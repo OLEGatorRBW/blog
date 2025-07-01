@@ -3,9 +3,8 @@ $dark-color: #333;
 $container-width: 1200px;
 
 // base/_variables.scss
-$font-primary: 'Fira Sans', sans-serif;
-$font-heading: 'Fira Sans Condensed', sans-serif;
-$font-logo: 'Alumni Sans Collegiate One', sans-serif;
+$font-text: 'Fira Sans', sans-serif;
+$font-olegatorrbw: 'Alumni Sans', sans-serif;
 
 $gap-side: 100px;
 
@@ -28,3 +27,9 @@ $font-accent: 'Fira Sans', cursive;
 
 $text-secondary: #555;
 $border-color: #eee;
+
+$font-weights: (
+  regular: 400,
+  medium: 500,
+  bold: 700
+);
