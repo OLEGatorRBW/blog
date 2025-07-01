@@ -1,14 +1,15 @@
 @use '../base/variables' as *;
-.menu{
+.menu {
   display: flex;
-  flex: 0 0 auto;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 0.3rem;
 
+  width: 200px;
+
+  margin-left: 200px;
   padding: 0;
-  margin-left: auto;
   
-  list-style-type: none;
+  list-style: none;
 }
 
 .menu__item{

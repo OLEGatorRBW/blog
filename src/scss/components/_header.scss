@@ -1,46 +1,25 @@
-// src/scss/components/_header.scss
-@use 'base/variables' as *;
-
-.header {
-  padding: $space-sm 0;
-  background: white;
-
-  &__container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: $container-width;
-    margin: 0 auto;
-    padding: 0 $space-sm;
+.header__container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  width: 100%;
   }
 
-  // Лого (25%)
-  &__logo {
-    flex: 0 0 25%;
-    max-width: 25%;
-    
-    img {
-      width: auto;
-      max-height: 40px; // Фиксированная высота лого
-      display: block;
-    }
+.header__logo {
+  width: 200px;
+  flex-shrink: 0;
   }
 
-  // Цитата (50%)
-  &__quote-wrapper {
-    flex: 0 0 50%;
-    max-width: 50%;
-    text-align: center;
-    padding: 0 $space-sm;
+.header__quote-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
 
-  }
+  width: fit-content; 
 
-  // Меню (25%)
-  .menu {
-    flex: 0 0 25%;
-    max-width: 25%;
-    display: flex;
-    justify-content: flex-end;
-  }
+  margin: 0 auto;
+
+  text-align: center;
 }
-
